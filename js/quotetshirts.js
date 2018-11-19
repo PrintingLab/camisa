@@ -50,7 +50,7 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		          		$scope.styles=data.success
 		          		$scope.$apply()
 		          	}
-		          	
+
 		          },
 		          error:function(){
 		          }
@@ -115,8 +115,32 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		          }
 		      })
 	}
+
+$scope.load=function(){
+
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-Token': $('meta[name=_token]').attr('content')
+		}
+	});
+	$.ajax({
+		url:'getquote',
+		type:'post',
+		data: {P:$scope.price,Q:$scope.quantity,Bs:$scope.back_side,Fs:$scope.front_side},
+						//processData: false,
+						success:function(data){
+console.log(data)
+
+						},
+						error:function(){
+						}
+				})
+
+}
+
+
 	$scope.init = function(){
 		$scope.loadcategories()
 	}()
-	
+
 });

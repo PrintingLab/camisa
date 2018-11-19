@@ -17,3 +17,5 @@ Route::get('/', function () {
 Route::post('enpoints', 'ApicallsController@GetCalls')->name('enpoints');
 Route::post('GetCategories', 'ApicallsController@GetCategories')->name('GetCategories');
 Route::post('cotizar', 'ApicallsController@callcotizar')->name('cotizar');
+
+Route::post('getquote', 'ApicallsController@callgetquote')->name('getquote');
