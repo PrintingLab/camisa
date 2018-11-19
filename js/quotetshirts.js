@@ -129,7 +129,7 @@ $scope.load=function(){
 		data: {P:$scope.price,Q:$scope.quantity,Bs:$scope.back_side,Fs:$scope.front_side},
 						//processData: false,
 						success:function(data){
-console.log(data)
+console.log('aca')
 
 						},
 						error:function(){

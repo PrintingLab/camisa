@@ -64,26 +64,29 @@ class ApicallsController extends Controller
     }else if($quantity>=13 && $quantity<=24){
       $bd_quantity=24;
     }else if($quantity>=25 && $quantity<=36){
-
+      $bd_quantity=36;
     }else if($quantity>=37 && $quantity<=48){
-
+      $bd_quantity=48;
     }else if($quantity>=49 && $quantity<=108){
-
+      $bd_quantity=108;
     }else if($quantity>=109 && $quantity<=288){
-
+      $bd_quantity=288;
     }else if($quantity>=289 && $quantity<=1010){
-
+      $bd_quantity=1010;
     }else if($quantity>=1011 && $quantity<=3000){
-
+      $bd_quantity=3000;
     }else if($quantity>=3001 && $quantity<=5000){
-
+      $bd_quantity=5000;
     }
 
 
 
 
+ // $consulta=DB::select("SELECT price FROM `printing` WHERE colors='' and quantity=$bd_quantity ");
 
 
+
+return response()->json($back_side);
 
 
   }
