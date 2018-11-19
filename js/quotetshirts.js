@@ -6,6 +6,8 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 	$scope.products=[]
 	$scope.price=0.0
 	$scope.product="Select a Color"
+	$scope.Pleasewalit="Color: "
+	$scope.selectvalid=true
 	$scope.loadcategories = function () {
 		$.ajaxSetup({
 			headers: {
@@ -62,6 +64,8 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		$scope.sltcategoty=cat
 		$scope.sltproduct=tlt
 		$scope.sltname=stl
+		$scope.price=0.0
+		$scope.Pleasewalit="Please walit..."
 		console.log($scope.styleImg)
 		$.ajaxSetup({
 			headers: {
@@ -80,7 +84,9 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		          		$scope.$apply()
 		          	}else{
 		          		$scope.products=data.success
-		          		$scope.$apply()
+                         $scope.Pleasewalit="Color: "
+                          $scope.selectvalid=false
+                         $scope.$apply()
 
 		          	}
 		          },
@@ -89,9 +95,10 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		      })
 
 	}
-	$scope.loadproduct = function (pc) {
+	$scope.loadproduct = function (pc,img) {
 		//prepro es el Precio del product
 		$scope.price=pc
+		$scope.styleImg=img
 		console.log($scope.price)
 		$.ajaxSetup({
 			headers: {
