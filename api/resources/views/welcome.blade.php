@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="imghome row">
+        <div class="imghome">
             <div class="container">
                 <div class="mx-auto">
                     <img src="{!! asset('img/printing-lab-logo-new-york-nj.png') !!}">
@@ -141,9 +141,6 @@
 </div>
 </div>
 </div>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 </div>
 </div>
 </div>
