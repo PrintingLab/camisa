@@ -96,7 +96,7 @@ class ApicallsController extends Controller
       $price_total=(($consulta*$quantity)+($price*$quantity));
       $price_total=$price_total+($back_side*10);
       $price_total=$price_total*2;
-      return response()->json($price_total);
+      return response()->json(['success'=>json_decode($price_total)]);
 
     }else {
 

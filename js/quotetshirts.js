@@ -2,6 +2,7 @@ var quotetshirtsApp = angular.module('quotetshirt-v1', []);
 
 quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 	$scope.Categories=[]
+	$scope.templatefilter="5000"
 	$scope.styles=[]
 	$scope.products=[]
 	$scope.price=0.0
@@ -21,7 +22,7 @@ $scope.front_side=0
 		$.ajax({
 			url:'enpoints',
 			type:'post',
-			//data: {endpoint:'categories/'},
+			//data: {endpoint:'styles'},
 			data: {endpoint:'styles?Search=T-Shirts'},
 		          //processData: false,
 		          success:function(data){
@@ -99,7 +100,7 @@ $scope.front_side=0
 		      })
 
 	}
-	$scope.loadproduct = function (pc,img) {
+	$scope.loadproduct = function (pc,img,imgB,imgS) {
 		//prepro es el Precio del product
 		$scope.price=pc
 		$scope.styleImg=img
