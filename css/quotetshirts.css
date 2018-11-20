@@ -15,6 +15,9 @@ body{
 	color: #fff;
 	background: #f4005b
 }
+.btn-group-toggle{
+  margin-top: 15px
+}
 .dropdown-menu.show {
 	transform: translate3d(0px, -0px, 0px);
 	top: 40px;
@@ -40,6 +43,10 @@ body{
 .rowcalculate input{
 	width: 100%;
 	height:40px
+}
+.rowcalculate bottom{
+  width: 100%;
+  height:40px
 }
 .mdstyle:hover{
 	background: #9e9e9e14;
