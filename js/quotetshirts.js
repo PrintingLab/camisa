@@ -12,6 +12,7 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 	$scope.preciototal=0
 $scope.back_side=0
 $scope.front_side=0
+$scope.check_side=false
 
 	$scope.loadcategories = function () {
 		$.ajaxSetup({
@@ -130,6 +131,8 @@ $scope.front_side=0
 
 $scope.load=function(){
 
+
+
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-Token': $('meta[name=_token]').attr('content')
@@ -138,7 +141,7 @@ $scope.load=function(){
 	$.ajax({
 		url:'getquote',
 		type:'post',
-		data: {P:$scope.price,Q:$scope.quantity, B:$scope.back_side, F:$scope.front_side},
+		data: {P:$scope.price,Q:$scope.quantity, B:$scope.back_side, F:$scope.front_side, C:$scope.check_side},
 						//processData: false,
 						success:function(data){
 

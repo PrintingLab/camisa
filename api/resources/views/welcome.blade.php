@@ -129,6 +129,8 @@
       <label> Back Side</label>
       <input type="number" ng-model="back_side" min="1" max="8" step="1">
   </div>
+
+  <input type="checkbox" ng-model="check_side" name="" value="">
 </div>
 <div class="col-md-12">
    <input type="button" name="" value="Get Quote" ng-click="load()" >

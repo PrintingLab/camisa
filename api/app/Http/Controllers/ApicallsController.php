@@ -58,7 +58,7 @@ class ApicallsController extends Controller
     $quantity=$request->Q;
     $front_side=$request->F;
     $back_side=$request->B;
-
+    $checkbox=$request->C;
 
     if ($quantity<=12) {
       $bd_quantity=12;
@@ -93,7 +93,7 @@ class ApicallsController extends Controller
 
       $consulta=DB::select("SELECT price FROM `printing` WHERE colors=$back_side and quantity=$bd_quantity ");
 
-      $price_total=(($consulta*$quantity)+($price*$quantity));
+      $price_total=(($consulta[0]->price*$quantity)+($price*$quantity));
       $price_total=$price_total+($back_side*10);
       $price_total=$price_total*2;
       return response()->json(['success'=>json_decode($price_total)]);
@@ -104,12 +104,27 @@ class ApicallsController extends Controller
       $consulta2=DB::select("SELECT price FROM `printing` WHERE colors=$back_side and quantity=$bd_quantity ");
 
 
+      if ( ($front_side==$back_side) && $checkbox=='true') {
+        $price_total=(($consulta[0]->price*$quantity)+($consulta2[0]->price*$quantity)+($price*$quantity));
+        $price_total=$price_total+($front_side*10);
+        $price_total=$price_total*2;
 
 
+return response()->json(['success'=>json_decode($price_total)]);
+      }else{
+        $price_total=(($consulta[0]->price*$quantity)+($consulta2[0]->price*$quantity)+($price*$quantity));
+        $price_total=$price_total+(($front_side*10)+($back_side*10));
+        $price_total=$price_total*2;
+
+        return response()->json(['success'=>json_decode($price_total)]);
+      }
+
+
+//return response()->json(['success'=>json_decode($price_total)]);
 
     }
 
-    // $consulta=DB::select("SELECT price FROM `printing` WHERE colors='' and quantity=$bd_quantity ");
+
 
 
 
