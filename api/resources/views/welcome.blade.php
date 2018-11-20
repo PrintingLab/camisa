@@ -123,11 +123,11 @@
     <label class="col-sm-5 col-form-label"><b>How many ink colors are in your design?</b></label>
     <div  class="col-sm-3">
       <label> Front Side</label>
-      <input type="number" ng-model="back_side" min="1" max="8" step="1">
+      <input type="number" ng-model="front_side" min="1" max="8" step="1">
   </div>
   <div  class="col-sm-3">
       <label> Back Side</label>
-      <input type="number" ng-model="front_side" min="1" max="8" step="1">
+      <input type="number" ng-model="back_side" min="1" max="8" step="1">
   </div>
 </div>
 <div class="col-md-12">
