@@ -150,12 +150,7 @@
           <p>Pricing Tips:<br> Printing on colored garments will cost more than printing on white. <br> Colors count in screen-printing because each one requires a unique screen. Lower your price by designing with one or two colors per side.</p>
         </div>
       </div>
-
-
-
     </div>
-
-
   </div>
 </div>
 <div class="modal-footer">
