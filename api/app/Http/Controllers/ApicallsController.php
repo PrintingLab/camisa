@@ -56,30 +56,60 @@ class ApicallsController extends Controller
 
     $price = $request->P;
     $quantity=$request->Q;
-    $back_side=$request->back_side;
-    $front_side=$request->front_side;
+    $front_side=$request->F;
+    $back_side=$request->B;
+
 
     if ($quantity<=12) {
       $bd_quantity=12;
     }else if($quantity>=13 && $quantity<=24){
       $bd_quantity=24;
     }else if($quantity>=25 && $quantity<=36){
-
+      $bd_quantity=36;
     }else if($quantity>=37 && $quantity<=48){
-
+      $bd_quantity=48;
     }else if($quantity>=49 && $quantity<=108){
-
+      $bd_quantity=108;
     }else if($quantity>=109 && $quantity<=288){
-
+      $bd_quantity=288;
     }else if($quantity>=289 && $quantity<=1010){
-
+      $bd_quantity=1010;
     }else if($quantity>=1011 && $quantity<=3000){
-
+      $bd_quantity=3000;
     }else if($quantity>=3001 && $quantity<=5000){
-
+      $bd_quantity=5000;
     }
 
 
+    if ($front_side>0 && $back_side==0) {
+
+      $consulta=DB::select("SELECT price FROM `printing` WHERE colors=$front_side and quantity=$bd_quantity ");
+      $price_total=(($consulta[0]->price*$quantity)+($price*$quantity));
+      $price_total=$price_total+($front_side*10);
+      $price_total=$price_total*2;
+      return response()->json(['success'=>json_decode($price_total)]);
+
+    }else if($front_side==0 && $back_side>0){
+
+      $consulta=DB::select("SELECT price FROM `printing` WHERE colors=$back_side and quantity=$bd_quantity ");
+
+      $price_total=(($consulta*$quantity)+($price*$quantity));
+      $price_total=$price_total+($back_side*10);
+      $price_total=$price_total*2;
+      return response()->json($price_total);
+
+    }else {
+
+      $consulta=DB::select("SELECT price FROM `printing` WHERE colors=$front_side and quantity=$bd_quantity ");
+      $consulta2=DB::select("SELECT price FROM `printing` WHERE colors=$back_side and quantity=$bd_quantity ");
+
+
+
+
+
+    }
+
+    // $consulta=DB::select("SELECT price FROM `printing` WHERE colors='' and quantity=$bd_quantity ");
 
 
 

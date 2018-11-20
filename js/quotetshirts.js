@@ -9,6 +9,10 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 	$scope.product="Select a Color"
 	$scope.Pleasewalit="Color: "
 	$scope.selectvalid=true
+	$scope.preciototal=0
+$scope.back_side=0
+$scope.front_side=0
+
 	$scope.loadcategories = function () {
 		$.ajaxSetup({
 			headers: {
@@ -134,11 +138,13 @@ $scope.load=function(){
 	$.ajax({
 		url:'getquote',
 		type:'post',
-		data: {P:$scope.price,Q:$scope.quantity,Bs:$scope.back_side,Fs:$scope.front_side},
+		data: {P:$scope.price,Q:$scope.quantity, B:$scope.back_side, F:$scope.front_side},
 						//processData: false,
 						success:function(data){
-console.log(data)
 
+$scope.preciototal=data.success;
+$scope.$apply()
+console.log($scope.preciototal);
 						},
 						error:function(){
 						}
