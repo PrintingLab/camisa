@@ -130,36 +130,9 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		//       })
 	}
 
-	$scope.load=function(){
-		console.log($scope.QuoteForm.$valid)
-		if ($scope.QuoteForm.$valid) {
-			$.ajaxSetup({
-			headers: {
-				'X-CSRF-Token': $('meta[name=_token]').attr('content')
-			}
-		});
-		$.ajax({
-			url:'getquote',
-			type:'post',
-<<<<<<< HEAD
-			data: {P:$scope.price},
-		          //processData: false,
-		          success:function(data){
-		          	console.log(data.success);
-		          	if (data.success=='null') {
-		          		$scope.error="Not found"
-		          	}else{
-		          		console.log(data.success)
-		          	}
-		          },
-		          error:function(){
-		          }
-		      })
-	}
-
 $scope.load=function(){
 
-
+		if ($scope.QuoteForm.$valid) {
 
 	$.ajaxSetup({
 		headers: {
@@ -170,9 +143,6 @@ $scope.load=function(){
 		url:'getquote',
 		type:'post',
 		data: {P:$scope.price,Q:$scope.quantity, B:$scope.back_side, F:$scope.front_side, C:$scope.check_side},
-=======
-			data: {P:$scope.price,Q:$scope.quantity, B:$scope.back_side, F:$scope.front_side},
->>>>>>> 86e32fc37a61f49bb7d6d7b93cba1ffea423e322
 						//processData: false,
 						success:function(data){
 
@@ -183,6 +153,7 @@ $scope.load=function(){
 						error:function(){
 						}
 					})
+
 		$scope.error=false
 		}else{
 			$scope.error=true
