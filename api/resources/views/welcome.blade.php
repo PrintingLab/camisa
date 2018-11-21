@@ -58,16 +58,16 @@
          <img src="https://www.ssactivewear.com/@{{item.styleImage}}" style="width: 100%">
          <p>Brand: @{{item.brandName}} <br> @{{item.title}}</p>
      </div>
-      <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+     <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
         Previous
     </button>
     @{{currentPage+1}}/@{{numberOfPages()}}
     <button ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
         Next
     </button>
- </div>
- <!-- Modal -->
- <div class="modal fade" id="CalYourPrice" tabindex="-1" role="dialog" aria-labelledby="CalYourPrice" aria-hidden="true">
+</div>
+<!-- Modal -->
+<div class="modal fade" id="CalYourPrice" tabindex="-1" role="dialog" aria-labelledby="CalYourPrice" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -79,87 +79,103 @@
   <div class="modal-body">
     <div class="container">
         <div class="row " >
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-6 rowcalculate">
-                        <label class="col-sm-12 col-form-label"><b>Category:</b></label>
-                        <div  class="col-sm-12">
-                            <input type="" name="" ng-model="sltcategoty" disabled>
-                        </div>
-                        <label class="col-sm-12 col-form-label"><b>Brand:</b></label>
-                        <div  class="col-sm-12">
-                            <input type="" name="" ng-model="sltbrand" disabled>
-                        </div>
+           <div class="col-md-2 col-sm-3 col-12">
+            <img src="https://www.ssactivewear.com/@{{styleImg}}" style="width: 100%">
+            <p hidden="" style="text-align: center;">@{{stylename}}</p>
+        </div>
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="row">
+                <div class="col-md-12 rowcalculate">
+                    <div  class="col-sm-12">
+                        <label for="sltcategoty" class="col-form-label"><b>Category:</b></label>
+                        <input id="sltcategoty" type="" name="" ng-model="sltcategoty" disabled>
                     </div>
-                    <div class="col-md-6 rowcalculate">
-                        <label class="col-sm-12 col-form-label"><b>Your Product:</b></label>
-                        <div  class="col-sm-12">
-                            <input type="" name="" ng-model="sltname" disabled>
-                        </div>
-                        <label class="col-sm-12 col-form-label"><b>@{{Pleasewalit}}</b></label>
-                        <div  class="col-sm-12">
-                           <div class="dropdown">
-                              <button ng-disabled="selectvalid" class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Select a Color
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <input ng-model="colorfilter" type="" name="" class="Search2" placeholder="Search">
-                                <a ng-repeat="item in products | filter:{sizeCode:4}" class="dropdown-item" href="" ng-click="loadproduct(item.casePrice,item.colorFrontImage,item.colorBackImage,item.colorSideImage,item.colorName,item.sizeName)"><img style="width: 15%" src="https://www.ssactivewear.com/@{{item.colorSwatchImage}}">@{{item.colorName}} - @{{item.sizeName}} </a>
-                            </div>
-                        </div>
+                    <div  class="col-sm-12">
+                        <label for="sltbrand" class="col-form-label"><b>Brand:</b></label>
+                        <input id="sltbrand" type="" name="" ng-model="sltbrand" disabled>
+                    </div>
+                    <div  class="col-sm-12">
+                        <label for="sltname" class="col-form-label"><b>Your Product:</b></label>
+                        <input id="sltname" type="" name="" ng-model="sltname" disabled>
                     </div>
                 </div>
-                <form name="QuoteForm" ng-model="QuotjkkeForm">
-                    <div class="col-md-12 Howuneed">
-                        <label for="quantity"><b>How many will you need?  #:</b></label>
-                        <input ng-disabled="selectvalid" type="number" id="quantity" name="" ng-model="quantity" min="1"   max="5000" required="">
+                <!-- <div class="col-md-6 rowcalculate">
+
+                    <label class="col-sm-12 col-form-label"><b>@{{Pleasewalit}}</b></label>
+                     <div  class="col-sm-12">
+                       <div class="dropdown">
+                          <button ng-disabled="selectvalid" class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Select a Color
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input ng-model="colorfilter" type="" name="" class="Search2" placeholder="Search">
+                            <a ng-repeat="item in products | filter:{sizeCode:4}" class="dropdown-item" href="" ng-click="loadproduct(item.casePrice,item.colorFrontImage,item.colorBackImage,item.colorSideImage,item.colorName,item.sizeName)"><img style="width: 15%" src="https://www.ssactivewear.com/@{{item.colorSwatchImage}}">@{{item.colorName}} - @{{item.sizeName}} </a>
+                        </div>
                     </div>
-                    <div class="col-md-12 Howinkuneed">
-                        <div class="row">
-                            <div class="col-md-6">
-                             <label for="_sides" ><b>How many ink colors are in your design?</b></label>
-                         </div>
-                         <div  class="col-md-3">
-                          <label> Front Side</label>
-                          <input ng-disabled="selectvalid" type="number" ng-model="front_side" min="1" max="8" step="1" required>
-                      </div>
-                      <div  class="col-md-3">
-                          <label> Back Side</label>
-                          <input ng-disabled="selectvalid" type="number" ng-model="back_side" min="0" max="8" step="1" required>
-                      </div>
-                      <div class="col-md-12 col-check_side" ng-show="front_side == back_side">
-                        <label for="check_side"><b>The design is the same for both sides?</b></label>
-                        <input id="check_side"  aria-label="Checkbox for following text input" class="check_side" type="checkbox" ng-model="check_side" name="" value="" >
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 btnQuote">
-             <input ng-disabled="btnQuotevalid" type="submit" name="" id="btnQuote" value="Get Quote" ng-click="load()" >
-             <label for="btnQuote" class="value">Price =  &nbsp &nbsp &nbsp<b>@{{preciototal}}</b></label>
-         </div>
-     </form>
- </div>
-</div>
-<div class="col-md-4">
-   <img src="https://www.ssactivewear.com/@{{styleImg}}" style="width: 100%">
-   <p style="text-align: center;">@{{stylename}}</p>
-   <div class="row" hidden="">
-       <div class="btn-group btn-group-toggle mx-auto" data-toggle="buttons">
-          <label class="active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Front
-        </label>
-        <label class="">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Side
-        </label>
-        <label class="">
-            <input type="radio" name="options" id="option3" autocomplete="off"> Back
-        </label>
-        <label class="">
-            <input type="radio" name="options" id="option3" autocomplete="off"> Model
-        </label>
+                </div> 
+
+            </div>-->
+        </div>
     </div>
+    <div class="col-md-7 col-sm-12">
+        <p style="padding: 0px;margin: 0px"><b>color:</b>@{{ClrNm}}</p>
+        <div class="row">
+            <div class="gridcolor col-md-1 col-2" ng-repeat="item in products | filter:{sizeCode:4}" ng-click="loadsize(tem.colorFrontImage,item.colorGroup,item.colorCode)">
+                <label style="color: @{{item.colorSwatchTextColor}}" >@{{item.colorName}}</label>
+                <img style="width: 100%" src="https://www.ssactivewear.com/@{{item.colorSwatchImage}}" >
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th  scope="col">color</th>
+              <th ng-click="loadproduct(item.casePrice,item.colorFrontImage,item.colorBackImage,item.colorSideImage,item.colorName,item.sizeName,item.colorGroup,item.colorCode)"  ng-repeat="item in products | filter:{colorGroup:ClrGroup,colorCode:ClrCode}">@{{item.sizeName}}</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Stock</th>
+          <td ng-repeat="item in products | filter:{colorGroup:ClrGroup,colorCode:ClrCode}">@{{item.qty}}</td>
+      </tr>
+  </tbody>
+</table>
 </div>
+<div class="col-md-12">
+    <form name="QuoteForm" ng-model="QuotjkkeForm">
+        <div class="row Howuneed">
+            <div class="mx-auto">
+                <label ><b>How many will you need?</b></label>
+                <input ng-disabled="selectvalid" type="number"  name="" ng-model="quantity" min="1"   max="5000" required="" placeholder="#">
+            </div>
+        </div>
+        <div class="col-md-12 Howinkuneed">
+            <div class="row">
+                <div class="col-md-6">
+                   <label for="_sides" ><b>How many ink colors are in your design?</b></label>
+               </div>
+               <div  class="col-md-3">
+                  <label> Front Side</label>
+                  <input ng-disabled="selectvalid" type="number" ng-model="front_side" min="1" max="8" step="1" required>
+              </div>
+              <div  class="col-md-3">
+                  <label> Back Side</label>
+                  <input ng-disabled="selectvalid" type="number" ng-model="back_side" min="0" max="8" step="1" required>
+              </div>
+              <div class="col-md-12 col-check_side" ng-show="front_side == back_side">
+                <label for="check_side"><b>The design is the same for both sides?</b></label>
+                <input id="check_side"  aria-label="Checkbox for following text input" class="check_side" type="checkbox" ng-model="check_side" name="" value="" >
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 btnQuote">
+       <input ng-disabled="btnQuotevalid" type="submit" name="" id="btnQuote" value="Get Quote" ng-click="load()" >
+       <label for="btnQuote" class="value">Price = &nbsp &nbsp &nbsp<b>@{{preciototal}}</b></label>
+   </div>
+</form>
 </div>
+
 </div>
 </div>
 <div ng-show="btnQuotevalid" class="alert alert-danger" role="alert">

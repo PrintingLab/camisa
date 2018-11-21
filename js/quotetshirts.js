@@ -5,11 +5,10 @@ quotetshirtsApp.filter('startFrom', function() {
         return input.slice(start);
     }
 });
-
 quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 	$scope.serverstatus=false
 	$scope.Categories=[]
-	$scope.templatefilter="Gildan"
+	$scope.templatefilter="5000"
 	$scope.styles=[]
 	$scope.products=[]
 	$scope.price=0.0
@@ -21,11 +20,13 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 	$scope.front_side=1
 	$scope.check_side=false
 	$scope.btnQuotevalid=true
-    $scope.currentPage = 0;
-    $scope.pageSize = 12;
-    $scope.numberOfPages=function(){
-        return Math.ceil($scope.styles.length/$scope.pageSize);                
-    }
+	$scope.currentPage = 0;
+	$scope.pageSize = 12;
+	$scope.ClrGroup=79
+	$scope.ClrCode=0
+	$scope.numberOfPages=function(){
+		return Math.ceil($scope.styles.length/$scope.pageSize);                
+	}
 
 	$scope.loadcategories = function () {
 		$.ajaxSetup({
@@ -124,8 +125,17 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		      })
 
 	}
-	$scope.loadproduct = function (pc,img,imgB,imgS,coloN,sizeN) {
+	$scope.loadsize = function (img,colorGp,colorCd) {
+		$scope.ClrGroup=colorGp
+		$scope.ClrCode=colorCd
+	}
+
+	$scope.loadproduct = function (pc,img,imgB,imgS,coloN,sizeN,colorGp,colorCd) {
 		//prepro es el Precio del product
+		console.log(colorCd)
+		$scope.ClrGroup=colorGp
+		$scope.ClrCode=colorCd
+		$scope.ClrNm=coloN
 		$scope.price=pc
 		$scope.styleImg=img
 		$scope.stylename=coloN+" - "+sizeN+" $"+pc
