@@ -19,3 +19,4 @@ Route::post('GetCategories', 'ApicallsController@GetCategories')->name('GetCateg
 Route::post('cotizar', 'ApicallsController@callcotizar')->name('cotizar');
 
 Route::post('getquote', 'ApicallsController@callgetquote')->name('getquote');
+Route::post('savequote', 'ApicallsController@callsavequote')->name('savequote');

@@ -60,9 +60,9 @@ class ApicallsController extends Controller
     $back_side=$request->B;
     $checkbox=$request->C;
 
-    if ($quantity<=12) {
+    if ($quantity<12) {
       $bd_quantity=12;
-    }else if($quantity>=13 && $quantity<=24){
+    }else if($quantity>=13 && $quantity<=23){
       $bd_quantity=24;
     }else if($quantity>=25 && $quantity<=36){
       $bd_quantity=36;
