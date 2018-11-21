@@ -1,8 +1,15 @@
 var quotetshirtsApp = angular.module('quotetshirt-v1', []);
+quotetshirtsApp.filter('startFrom', function() {
+	return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
+    }
+});
 
 quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
+	$scope.serverstatus=false
 	$scope.Categories=[]
-	$scope.templatefilter="5000"
+	$scope.templatefilter="Gildan"
 	$scope.styles=[]
 	$scope.products=[]
 	$scope.price=0.0
@@ -11,7 +18,16 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 	$scope.selectvalid=true
 	$scope.preciototal='$'+0
 	$scope.back_side=0
-	$scope.front_side=0
+	$scope.front_side=1
+	$scope.check_side=false
+	$scope.btnQuotevalid=true
+    $scope.currentPage = 0;
+    $scope.pageSize = 12;
+    $scope.numberOfPages=function(){
+        return Math.ceil($scope.styles.length/$scope.pageSize);
+    }
+
+
 	$scope.loadcategories = function () {
 		$.ajaxSetup({
 			headers: {
@@ -31,8 +47,14 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		          	$scope.$apply()
 		          	$("#pageload").hide();
 		          	$("#preloader").hide();
+
 		          },
-		          error:function(){
+		          error:function(error){
+		          	$("#pageload").hide();
+		          	$("#preloader").hide();
+		          	console.log(error.statusText)
+		          	$scope.serverstatus=true
+		          	$scope.$apply()
 		          }
 		      })
 	};
@@ -71,6 +93,9 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		$scope.price=0.0
 		$scope.preciototal='$'+0
 		$scope.Pleasewalit="Please walit..."
+		$scope.btnQuotevalid=true
+		$scope.stylename=""
+		$scope.quantity=""
 		console.log($scope.styleImg)
 		$.ajaxSetup({
 			headers: {
@@ -104,8 +129,9 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		//prepro es el Precio del product
 		$scope.price=pc
 		$scope.styleImg=img
-		$scope.stylename=coloN+" - "+sizeN
+		$scope.stylename=coloN+" - "+sizeN+" $"+pc
 		$scope.load()
+		$scope.btnQuotevalid=false
 		// console.log($scope.price)
 		// $.ajaxSetup({
 		// 	headers: {
@@ -130,10 +156,9 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		//       })
 	}
 
-$scope.load=function(){
-
+	$scope.load=function(){
+		console.log($scope.QuoteForm.$valid)
 		if ($scope.QuoteForm.$valid) {
-
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-Token': $('meta[name=_token]').attr('content')
@@ -147,14 +172,15 @@ $scope.load=function(){
 						success:function(data){
 
 							$scope.preciototal='$ '+data.success;
+							$scope.preciototalBD=data.success;
 							$scope.$apply()
 							console.log($scope.preciototal);
+							$scope.Savequote()
 						},
 						error:function(){
 						}
 					})
-
-		$scope.error=false
+			$scope.error=false
 		}else{
 			$scope.error=true
 		}
@@ -163,6 +189,28 @@ $scope.load=function(){
 
 	}
 
+
+	$scope.Savequote=function(){
+		console.log($scope.sltbrand+' - '+$scope.sltproduct+' - '+$scope.sltname+' - '+$scope.stylename)
+		var prod= $scope.sltbrand+' - '+$scope.sltproduct+' - '+$scope.sltname+' - '+$scope.stylename
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-Token': $('meta[name=_token]').attr('content')
+			}
+		});
+		$.ajax({
+			url:'savequote',
+			type:'post',
+			data: {np:prod,P:$scope.preciototalBD,Q:$scope.quantity, B:$scope.back_side, F:$scope.front_side,},
+						//processData: false,
+						success:function(data){
+							console.log(data.success);
+						},
+						error:function(){
+						}
+					})
+
+	}
 
 	$scope.init = function(){
 		$scope.loadcategories()
