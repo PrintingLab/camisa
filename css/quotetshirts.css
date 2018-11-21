@@ -26,15 +26,18 @@ body{
 	width: 100%
 }
 .imghome{
-	height: auto;
-	background-image: url('../img/Calculate-tshirt-price.jpg')
+  background-size: cover;
+  height: auto;
+  background-image: url('../img/Calculate-tshirt-price.jpg')
 }
 .imghome img{
-	padding-top: 90px;
-	padding-bottom: 90px
+	padding-top: 70px;
+	padding-bottom: 70px;
+  width: 100%
 }
 .imghome h1{
-	color: #fff
+	color: #fff;
+  padding-bottom: 20px;
 }
 .Search{
 	margin-top: 60px;
@@ -42,28 +45,71 @@ body{
 }
 .rowcalculate input{
 	width: 100%;
-	height:40px
+	height:40px;
+  border: 1px #000 solid;
+  padding: 5px
 }
-.rowcalculate bottom{
+.rowcalculate div{
+ padding: 0px
+}
+.rowcalculate button{
   width: 100%;
-  height:40px
+  height:40px;
+  border: 1px #000 solid;
+  background: #000;
+  color: #fff;
+  border-radius: 0;
+}
+.Howuneed{
+  border-top: 1px #80808047 solid;
+  margin-top: 15px;
+  padding-top: 15px
+}
+.Howuneed input{
+  width: 20%;
+  height:30px;
+  border: 1px #000 solid;
+  padding: 5px
+}
+.Howinkuneed{
+ border-top: 1px #80808047 solid;
+ margin-top: 15px;
+ padding-top: 15px
+}
+.Howinkuneed input{
+  width: 40%;
+  height:30px;
+  border: 1px #000 solid;
+  padding: 5px
+}
+.btnQuote {
+  margin-top: 20px
+}
+.btnQuote input{
+  width: 160px;
+  height: 40px;
+  background: #f4005b;
+  color: #fff;
+  border: 0px
 }
 .mdstyle:hover{
 	background: #9e9e9e14;
 	cursor: pointer;
 }
+.btn-group-toggle label{
+  border:0px;
+  background: none
+}
+
 .value{
-	color: #f4005b
+	font-size: 20px;
+  color: #f4005b;
+  font-weight: 600;
 }
 .modal-dialog {
-	max-width: 60% !important;
+	max-width: 60%;
 }
 .rowcalculate select{
-	width: 100%;
-	height:40px
-}
-.rowcalculate button{
-	border-radius: 0;
 	width: 100%;
 	height:40px
 }
@@ -194,4 +240,40 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+@media (max-width: 1360px){
+
+}
+
+@media (max-width: 1267px){
+
+}
+
+@media (max-width: 1178px){
+
+}
+
+@media (max-width: 1021px){
+  .modal-dialog {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 1005px){
+  .modal-dialog {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 586px){
+  .modal-dialog {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 341px){
+  .modal-dialog {
+    max-width: 90%;
+  }
 }

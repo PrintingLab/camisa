@@ -9,11 +9,9 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 	$scope.product="Select a Color"
 	$scope.Pleasewalit="Color: "
 	$scope.selectvalid=true
-	$scope.preciototal=0
-$scope.back_side=0
-$scope.front_side=0
-$scope.check_side=false
-
+	$scope.preciototal='$'+0
+	$scope.back_side=0
+	$scope.front_side=0
 	$scope.loadcategories = function () {
 		$.ajaxSetup({
 			headers: {
@@ -71,6 +69,7 @@ $scope.check_side=false
 		$scope.sltproduct=tlt
 		$scope.sltname=stl
 		$scope.price=0.0
+		$scope.preciototal='$'+0
 		$scope.Pleasewalit="Please walit..."
 		console.log($scope.styleImg)
 		$.ajaxSetup({
@@ -90,9 +89,9 @@ $scope.check_side=false
 		          		$scope.$apply()
 		          	}else{
 		          		$scope.products=data.success
-                         $scope.Pleasewalit="Color: "
-                          $scope.selectvalid=false
-                         $scope.$apply()
+		          		$scope.Pleasewalit="Color: "
+		          		$scope.selectvalid=false
+		          		$scope.$apply()
 
 		          	}
 		          },
@@ -101,19 +100,48 @@ $scope.check_side=false
 		      })
 
 	}
-	$scope.loadproduct = function (pc,img,imgB,imgS) {
+	$scope.loadproduct = function (pc,img,imgB,imgS,coloN,sizeN) {
 		//prepro es el Precio del product
 		$scope.price=pc
 		$scope.styleImg=img
-		console.log($scope.price)
-		$.ajaxSetup({
+		$scope.stylename=coloN+" - "+sizeN
+		$scope.load()
+		// console.log($scope.price)
+		// $.ajaxSetup({
+		// 	headers: {
+		// 		'X-CSRF-Token': $('meta[name=_token]').attr('content')
+		// 	}
+		// });
+		// $.ajax({
+		// 	url:'cotizar',
+		// 	type:'post',
+		// 	data: {P:$scope.price},
+		//           //processData: false,
+		//           success:function(data){
+		//           	console.log(data.success);
+		//           	if (data.success=='null') {
+		//           		$scope.error="Not found"
+		//           	}else{
+		//           		console.log(data.success)
+		//           	}
+		//           },
+		//           error:function(){
+		//           }
+		//       })
+	}
+
+	$scope.load=function(){
+		console.log($scope.QuoteForm.$valid)
+		if ($scope.QuoteForm.$valid) {
+			$.ajaxSetup({
 			headers: {
 				'X-CSRF-Token': $('meta[name=_token]').attr('content')
 			}
 		});
 		$.ajax({
-			url:'cotizar',
+			url:'getquote',
 			type:'post',
+<<<<<<< HEAD
 			data: {P:$scope.price},
 		          //processData: false,
 		          success:function(data){
@@ -142,18 +170,27 @@ $scope.load=function(){
 		url:'getquote',
 		type:'post',
 		data: {P:$scope.price,Q:$scope.quantity, B:$scope.back_side, F:$scope.front_side, C:$scope.check_side},
+=======
+			data: {P:$scope.price,Q:$scope.quantity, B:$scope.back_side, F:$scope.front_side},
+>>>>>>> 86e32fc37a61f49bb7d6d7b93cba1ffea423e322
 						//processData: false,
 						success:function(data){
 
-$scope.preciototal=data.success;
-$scope.$apply()
-console.log($scope.preciototal);
+							$scope.preciototal='$ '+data.success;
+							$scope.$apply()
+							console.log($scope.preciototal);
 						},
 						error:function(){
 						}
-				})
+					})
+		$scope.error=false
+		}else{
+			$scope.error=true
+		}
 
-}
+
+
+	}
 
 
 	$scope.init = function(){
