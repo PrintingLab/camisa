@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="_token" content='{{csrf_token()}}'>
-  <title>Laravel</title>
+  <title>Tshirts Quote - Printinglab.com</title>
   <!-- Fonts -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -36,8 +36,9 @@
             </div>
         </div>
         <div class="container">
-         <div class="col align-self-center">
-            <input  ng-model="templatefilter" type="" name="" class="Search">
+           <div class="col align-self-center">
+            <label for="Searchproduct"><b>Search product: </b></label>
+            <input  ng-model="templatefilter" type="" id="Searchproduct" name="" class="Search" placeholder="Search product">
             <i class="fas fa-search"></i>
         </div>
         <select hidden ng-model="category" ng-change="loadbaseCategory(this.category)">
@@ -49,56 +50,66 @@
         </option>
     </select>
     <div class="row">
-       @{{$scope.error}} 
-       <div data-toggle="modal" data-target="#CalYourPrice" ng-repeat="item in styles | filter:templatefilter" class="col-md-2 mdstyle" ng-click=loadstyles(item.styleID,item.styleImage,item.title,item.brandName,item.baseCategory,item.styleName) >
-           <p style="text-align: center;border-bottom: 1px #8080803b solid;"><b>@{{item.styleName}}</b></p>
-           <img src="https://www.ssactivewear.com/@{{item.styleImage}}" style="width: 100%">
-           <p>Brand: @{{item.brandName}} <br> @{{item.title}}</p>
-       </div>
-   </div>
-   <!-- Modal -->
-   <div class="modal fade" id="CalYourPrice" tabindex="-1" role="dialog" aria-labelledby="CalYourPrice" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 style="text-align: center;">@{{sltbrand}} - @{{sltproduct}} - @{{sltname}}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-            <div class="row " >
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-6 rowcalculate">
-                            <label class="col-sm-12 col-form-label"><b>Category:</b></label>
-                            <div  class="col-sm-12">
-                                <input type="" name="" ng-model="sltcategoty" disabled>
-                            </div>
-                            <label class="col-sm-12 col-form-label"><b>Brand:</b></label>
-                            <div  class="col-sm-12">
-                                <input type="" name="" ng-model="sltbrand" disabled>
-                            </div>
+        <div ng-show="serverstatus" class="col-sm-12" style="height: 60vh">
+            <h1>Internal server error Please <a href="https://quotetshirts.printinglab.com/">try again</a></h1>
+        </div>
+        <div data-toggle="modal" data-target="#CalYourPrice" ng-repeat="item in styles | filter:templatefilter | startFrom:currentPage*pageSize | limitTo:pageSize" class="col-6 col-sm-4 col-md-3 col-lg-2 mdstyle" ng-click=loadstyles(item.styleID,item.styleImage,item.title,item.brandName,item.baseCategory,item.styleName) >
+         <p style="text-align: center;border-bottom: 1px #8080803b solid;"><b>@{{item.styleName}}</b></p>
+         <img src="https://www.ssactivewear.com/@{{item.styleImage}}" style="width: 100%">
+         <p>Brand: @{{item.brandName}} <br> @{{item.title}}</p>
+     </div>
+      <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+        Previous
+    </button>
+    @{{currentPage+1}}/@{{numberOfPages()}}
+    <button ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+        Next
+    </button>
+ </div>
+ <!-- Modal -->
+ <div class="modal fade" id="CalYourPrice" tabindex="-1" role="dialog" aria-labelledby="CalYourPrice" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 style="text-align: center;">@{{sltbrand}} - @{{sltproduct}} - @{{sltname}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+        <div class="row " >
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6 rowcalculate">
+                        <label class="col-sm-12 col-form-label"><b>Category:</b></label>
+                        <div  class="col-sm-12">
+                            <input type="" name="" ng-model="sltcategoty" disabled>
                         </div>
-                        <div class="col-md-6 rowcalculate">
-                            <label class="col-sm-12 col-form-label"><b>Your Product:</b></label>
-                            <div  class="col-sm-12">
-                                <input type="" name="" ng-model="sltname" disabled>
-                            </div>
-                            <label class="col-sm-12 col-form-label"><b>@{{Pleasewalit}}</b></label>
-                            <div  class="col-sm-12">
-                             <div class="dropdown">
+                        <label class="col-sm-12 col-form-label"><b>Brand:</b></label>
+                        <div  class="col-sm-12">
+                            <input type="" name="" ng-model="sltbrand" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6 rowcalculate">
+                        <label class="col-sm-12 col-form-label"><b>Your Product:</b></label>
+                        <div  class="col-sm-12">
+                            <input type="" name="" ng-model="sltname" disabled>
+                        </div>
+                        <label class="col-sm-12 col-form-label"><b>@{{Pleasewalit}}</b></label>
+                        <div  class="col-sm-12">
+                           <div class="dropdown">
                               <button ng-disabled="selectvalid" class=" dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Select a Color
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a ng-repeat="item in products" class="dropdown-item" href="" ng-click="loadproduct(item.casePrice,item.colorFrontImage,item.colorBackImage,item.colorSideImage,item.colorName,item.sizeName)"><img style="width: 15%" src="https://www.ssactivewear.com/@{{item.colorFrontImage}}">@{{item.colorName}} - @{{item.sizeName}}</a>
+                                <input ng-model="colorfilter" type="" name="" class="Search2" placeholder="Search">
+                                <a ng-repeat="item in products | filter:{sizeCode:4}" class="dropdown-item" href="" ng-click="loadproduct(item.casePrice,item.colorFrontImage,item.colorBackImage,item.colorSideImage,item.colorName,item.sizeName)"><img style="width: 15%" src="https://www.ssactivewear.com/@{{item.colorSwatchImage}}">@{{item.colorName}} - @{{item.sizeName}} </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <form name="QuoteForm" ng-model="QuoteForm">
+                <form name="QuoteForm" ng-model="QuotjkkeForm">
                     <div class="col-md-12 Howuneed">
                         <label for="quantity"><b>How many will you need?  #:</b></label>
                         <input ng-disabled="selectvalid" type="number" id="quantity" name="" ng-model="quantity" min="1"   max="5000" required="">
@@ -106,30 +117,34 @@
                     <div class="col-md-12 Howinkuneed">
                         <div class="row">
                             <div class="col-md-6">
-                               <label for="_sides" ><b>How many ink colors are in your design?</b></label>
-                           </div>
-                           <div  class="col-md-3">
-                              <label> Front Side</label>
-                              <input ng-disabled="selectvalid" type="number" ng-model="front_side" min="1" max="8" step="1" required>
-                          </div>
-                          <div  class="col-md-3">
-                              <label> Back Side</label>
-                              <input ng-disabled="selectvalid" type="number" ng-model="back_side" min="0" max="8" step="1" required>
-                          </div>
+                             <label for="_sides" ><b>How many ink colors are in your design?</b></label>
+                         </div>
+                         <div  class="col-md-3">
+                          <label> Front Side</label>
+                          <input ng-disabled="selectvalid" type="number" ng-model="front_side" min="1" max="8" step="1" required>
                       </div>
-                  </div>
-                  <div class="col-md-12 btnQuote">
-                   <input ng-disabled="selectvalid" type="submit" name="" id="btnQuote" value="Get Quote" ng-click="load()" >
-                   <label for="btnQuote" class="value">Price = @{{preciototal}}</label>
-               </div>
-           </form>
-       </div>
-   </div>
-   <div class="col-md-4">
-     <img src="https://www.ssactivewear.com/@{{styleImg}}" style="width: 100%">
-     <label>@{{stylename}}</label>
-     <div class="row" hidden="">
-         <div class="btn-group btn-group-toggle mx-auto" data-toggle="buttons">
+                      <div  class="col-md-3">
+                          <label> Back Side</label>
+                          <input ng-disabled="selectvalid" type="number" ng-model="back_side" min="0" max="8" step="1" required>
+                      </div>
+                      <div class="col-md-12 col-check_side" ng-show="front_side == back_side">
+                        <label for="check_side"><b>The design is the same for both sides?</b></label>
+                        <input id="check_side"  aria-label="Checkbox for following text input" class="check_side" type="checkbox" ng-model="check_side" name="" value="" >
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 btnQuote">
+             <input ng-disabled="btnQuotevalid" type="submit" name="" id="btnQuote" value="Get Quote" ng-click="load()" >
+             <label for="btnQuote" class="value">Price =  &nbsp &nbsp &nbsp<b>@{{preciototal}}</b></label>
+         </div>
+     </form>
+ </div>
+</div>
+<div class="col-md-4">
+   <img src="https://www.ssactivewear.com/@{{styleImg}}" style="width: 100%">
+   <p style="text-align: center;">@{{stylename}}</p>
+   <div class="row" hidden="">
+       <div class="btn-group btn-group-toggle mx-auto" data-toggle="buttons">
           <label class="active">
             <input type="radio" name="options" id="option1" autocomplete="off" checked> Front
         </label>
@@ -145,9 +160,10 @@
     </div>
 </div>
 </div>
-
-
 </div>
+</div>
+<div ng-show="btnQuotevalid" class="alert alert-danger" role="alert">
+  Please select a color
 </div>
 </div>
 <div class="modalfooter">
@@ -158,7 +174,30 @@
 </div>
 </div>
 </div>
-</div>
+<div class="container-fluid bg-primary py-3">
+    <div class="container">
+      <div class="row py-3">
+        <div class="col-md-9">
+            <a href="https://printinglab.com/" target="_blank">
+                <img style="width: 220px" src="{!! asset('img/printing-lab-logo-new-york-nj.png') !!}">
+            </a>
+        </div>
+        <div class="col-md-3">
+          <div class="d-inline-block" style="float: right;">
+            <div class="bg-circle-outline d-inline-block">
+              <a href="https://www.facebook.com/PrintingLab" target="_blank" class="text-white"><i class="fab fa-facebook-f"></i>
+              </a>
+          </div>
+          <div class="bg-circle-outline d-inline-block">
+              <a href="https://www.instagram.com/printinglab/" target="_blank" class="text-white">
+                <i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="bg-circle-outline d-inline-block">
+              <a href="https://www.youtube.com/channel/UCXmJgr5ynTbf1oNEM6r6I7g" target="_blank" class="text-white">
+                <i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 </div>

@@ -26,13 +26,13 @@ body{
 	width: 100%
 }
 .imghome{
-  background-size: cover;
+  background-attachment: fixed;
+  background-size: auto;
   height: auto;
   background-image: url('../img/Calculate-tshirt-price.jpg')
 }
 .imghome img{
-	padding-top: 70px;
-	padding-bottom: 70px;
+	padding: 70px 20px 70px 20px;
   width: 100%
 }
 .imghome h1{
@@ -42,6 +42,12 @@ body{
 .Search{
 	margin-top: 60px;
 	margin-bottom: 30px
+}
+.Search2{
+  padding: 6px
+}
+#dropdownMenuButton{
+  cursor: pointer;
 }
 .rowcalculate input{
 	width: 100%;
@@ -60,6 +66,12 @@ body{
   color: #fff;
   border-radius: 0;
 }
+.col-check_side{
+ border-top: 1px #80808047 solid;
+ margin-top: 15px;
+ padding-top: 15px
+}
+
 .Howuneed{
   border-top: 1px #80808047 solid;
   margin-top: 15px;
@@ -82,10 +94,15 @@ body{
   border: 1px #000 solid;
   padding: 5px
 }
+.check_side{
+  height: auto !important;
+  width: 20px !important
+}
 .btnQuote {
   margin-top: 20px
 }
 .btnQuote input{
+  cursor: pointer;
   width: 160px;
   height: 40px;
   background: #f4005b;
@@ -100,7 +117,9 @@ body{
   border:0px;
   background: none
 }
-
+.alert{
+  margin-top: 15px
+}
 .value{
 	font-size: 20px;
   color: #f4005b;
@@ -241,6 +260,50 @@ body{
 	justify-content: center;
 	align-items: center;
 }
+.bg-primary {
+ background-color: #000 !important;
+}
+
+.bg-circle
+{
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  padding: 14px 4px;
+  color: #ececec;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.bg-circle-outline
+{
+  width: 50px;
+  height: 50px;
+  color:smoke;
+  padding: 8px 2px;
+  border: 2px #fff solid;
+  border-color: smoke;
+  border-radius: 50%;
+}
+
+
+.bg-circle a, a:hover, .media a:focus
+{
+  text-decoration: none !important;
+  outline: none;
+  color: #ececec;
+}
+.bg-circle-outline a, a:hover, .media a:focus
+{
+  text-decoration: none !important;
+  outline: none;
+  color: #ececec;
+}
+.py-3 i{
+  font-size: 30px;
+  text-align: center;
+  width: 100%
+}
 
 @media (max-width: 1360px){
 
@@ -256,7 +319,7 @@ body{
 
 @media (max-width: 1021px){
   .modal-dialog {
-    max-width: 100%;
+    max-width: 90%;
   }
 }
 
@@ -268,12 +331,17 @@ body{
 
 @media (max-width: 586px){
   .modal-dialog {
-    max-width: 90%;
+    max-width: 100%;
+  }
+  .imghome h1 {
+    color: #fff;
+    padding-bottom: 5px;
+    font-size: 25px;
   }
 }
 
 @media (max-width: 341px){
   .modal-dialog {
-    max-width: 90%;
+    max-width: 100%;
   }
 }

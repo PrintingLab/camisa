@@ -26,30 +26,17 @@ class ApicallsController extends Controller
     curl_close($ch);
     return response()->json(['success'=>json_decode($result)]);
   }
-  public function GetCategories(Request $request){
-    $endpoint = "categories/";
-    $apiPath =  "https://api.ssactivewear.com/v2/".$endpoint;
-    $returnformat= "?mediatype=json";
-    $username = '72348';
-    $password = '023f94c9-dd3f-4543-bfb5-ed82f0b2cbcc';
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL,$apiPath);
-    $headers = array(
-      'Content-Type:text/html'
-    );
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-    curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
-    $result = curl_exec($ch);
-    curl_close($ch);
 
-    return response()->json(['success'=>json_decode($result)]);
-  }
-
-  public function callcotizar(Request $request){
-    $result = DB::table('printing')->where('id', 1)->get();
-    return response()->json(['success'=>json_decode($result)]);
+  public function callsavequote(Request $request){
+    $price = $request->P;
+    $quantity=$request->Q;
+    $front_side=$request->F;
+    $back_side=$request->B;
+    $name=$request->np;
+    $success = DB::table('quotes')->insertGetId(
+      array('quantity' =>$quantity,'frontcolors' =>$front_side,'backcolors' =>$back_side,'product' =>$name, 'total' =>$price,)
+   );
+    return response()->json(['success'=>json_decode($success)]);
   }
 
   public function callgetquote(Request $request){
@@ -58,7 +45,7 @@ class ApicallsController extends Controller
     $quantity=$request->Q;
     $front_side=$request->F;
     $back_side=$request->B;
-
+    $checkbox=$request->C;
 
     if ($quantity<=12) {
       $bd_quantity=12;
@@ -93,7 +80,7 @@ class ApicallsController extends Controller
 
       $consulta=DB::select("SELECT price FROM `printing` WHERE colors=$back_side and quantity=$bd_quantity ");
 
-      $price_total=(($consulta*$quantity)+($price*$quantity));
+      $price_total=(($consulta[0]->price*$quantity)+($price*$quantity));
       $price_total=$price_total+($back_side*10);
       $price_total=$price_total*2;
       return response()->json(['success'=>json_decode($price_total)]);
@@ -104,12 +91,27 @@ class ApicallsController extends Controller
       $consulta2=DB::select("SELECT price FROM `printing` WHERE colors=$back_side and quantity=$bd_quantity ");
 
 
+      if ( ($front_side==$back_side) && $checkbox=='true') {
+        $price_total=(($consulta[0]->price*$quantity)+($consulta2[0]->price*$quantity)+($price*$quantity));
+        $price_total=$price_total+($front_side*10);
+        $price_total=$price_total*2;
 
 
+        return response()->json(['success'=>json_decode($price_total)]);
+      }else{
+        $price_total=(($consulta[0]->price*$quantity)+($consulta2[0]->price*$quantity)+($price*$quantity));
+        $price_total=$price_total+(($front_side*10)+($back_side*10));
+        $price_total=$price_total*2;
+
+        return response()->json(['success'=>json_decode($price_total)]);
+      }
+
+
+//return response()->json(['success'=>json_decode($price_total)]);
 
     }
 
-    // $consulta=DB::select("SELECT price FROM `printing` WHERE colors='' and quantity=$bd_quantity ");
+
 
 
 
