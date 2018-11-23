@@ -58,13 +58,13 @@
      <img src="https://www.ssactivewear.com/@{{item.styleImage}}" style="width: 100%">
      <p>Brand: @{{item.brandName}} <br> @{{item.title}}</p>
  </div>
- <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+ <!-- <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
     Previous
 </button>
 @{{currentPage+1}}/@{{numberOfPages()}}
 <button ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
     Next
-</button>
+</button> -->
 </div>
 <!-- Modal -->
 <div class="modal fade" id="CalYourPrice" tabindex="-1" role="dialog" aria-labelledby="CalYourPrice" aria-hidden="true">
@@ -120,23 +120,23 @@
         <div class="col-md-7 col-sm-12">
             <p style="padding: 0px;margin: 0px"><b>color:</b>@{{ClrNm}}</p>
             <div class="row">
-                <div class="gridcolor col-md-1 col-2" ng-repeat="item in products | filter:{sizeCode:4}" ng-click="loadsize(tem.colorFrontImage,item.colorGroup,item.colorCode)">
+                <div class="gridcolor col-md-1 col-2" ng-repeat="item in products | filter:{sizeCode:4}" ng-click="loadsize(item.colorFrontImage,item.colorGroup,item.colorCode,item.colorName)">
                     <label style="color: @{{item.colorSwatchTextColor}}" >@{{item.colorName}}</label>
                     <img style="width: 100%" src="https://www.ssactivewear.com/@{{item.colorSwatchImage}}" >
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" style="padding: 0px;margin: 0px">
             <table class="table">
               <thead class="thead-dark">
                 <tr>
-                  <th  scope="col">color</th>
-                  <th ng-click="loadproduct(item.casePrice,item.colorFrontImage,item.colorBackImage,item.colorSideImage,item.colorName,item.sizeName,item.colorGroup,item.colorCode)"  ng-repeat="item in products | filter:{colorGroup:ClrGroup,colorCode:ClrCode}">@{{item.sizeName}}</th>
+                  <th >Size</th>
+                  <th id="@{{item.sku}}" ng-click="loadproduct(item.casePrice,item.colorFrontImage,item.colorBackImage,item.colorSideImage,item.colorName,item.sizeName,item.colorGroup,item.colorCode,item.qty,item.sku)" ng-repeat="item in products | filter:{colorGroup:ClrGroup,colorCode:ClrCode}">@{{item.sizeName}}</th>
               </tr>
           </thead>
           <tbody>
             <tr>
-              <th scope="row">Stock</th>
+              <th >Stock</th>
               <td ng-repeat="item in products | filter:{colorGroup:ClrGroup,colorCode:ClrCode}">@{{item.qty}}</td>
           </tr>
       </tbody>
@@ -145,59 +145,65 @@
 <div class="col-md-12">
     <form name="QuoteForm" ng-model="QuotjkkeForm">
         <div class="row Howuneed">
+
             <div class="mx-auto">
-                <label ><b>How many will you need?</b></label>
-                <input ng-disabled="selectvalid" type="number"  name="" ng-model="quantity" min="1"   max="5000" required="" placeholder="#">
+                <p style="text-align: center;" ><b>How many will you need?</b></p>
+                <input ng-disabled="btnQuotevalid" type="number"  name="" ng-model="quantity" min="1"   max="5000" required placeholder="#" ng-change="valquantity()">
             </div>
         </div>
         <div class="col-md-12 Howinkuneed">
+            <p for="_sides" style="text-align: center;" ><b>How many ink colors are in your design?</b></p>
             <div class="row">
-                <div class="col-md-6">
-                   <label for="_sides" ><b>How many ink colors are in your design?</b></label>
-               </div>
-               <label for="">front_side
-                <input type="checkbox" ng-model="front_side" name="" value="">
-            </label>
-            <label for="">back_side
-                <input type="checkbox" ng-model="back_side" name="" value="">
-            </label>
-            <div  class="col-md-3">
-                <label> lado 1</label>
-                <input ng-disabled="selectvalid" type="number" ng-model="location_1" min="0" max="8" step="1" >
+                <div class="row mx-auto" ng-show="showquantity">
+                    <div  class="col-md-1">
+                    </div>
+                    <div  class="col-md-2 col-12">
+                        <label> Location 1</label>
+                        <input ng-disabled="btnQuotevalid" type="number" ng-model="location_1" min="0" max="@{{maxlocation}}" step="1" ng-change="checkboxlocation()">
+                    </div>
+                    <div  class="col-md-2 col-12">
+                        <label> Location 2</label>
+                        <input ng-disabled="btnQuotevalid" type="number" ng-model="location_2" min="0" max="@{{maxlocation}}" step="1" ng-change="checkboxlocation()">
+                    </div>
+                    <div  class="col-md-2 col-12">
+                        <label> Location 3</label>
+                        <input ng-disabled="btnQuotevalid" type="number" ng-model="location_3" min="0" max="@{{maxlocation}}" step="1" ng-change="checkboxlocation()">
+                    </div>
+                    <div  class="col-md-2 col-12">
+                        <label> Location 4</label>
+                        <input ng-disabled="btnQuotevalid" type="number" ng-model="location_4" min="0" max="@{{maxlocation}}" step="1" ng-change="checkboxlocation()">
+                    </div>
+                    <div  class="col-md-2 col-12">
+                        <label> Location 5</label>
+                        <input ng-disabled="btnQuotevalid" type="number" ng-model="location_5" min="0" max="@{{maxlocation}}" step="1" ng-change="checkboxlocation()">
+                    </div>
+                    <div  class="col-md-1">
+                    </div>
+                </div>
             </div>
-            <div  class="col-md-3">
-                <label> lado 2</label>
-                <input ng-disabled="selectvalid" type="number" ng-model="location_2" min="0" max="8" step="1" >
-            </div>
-            <div  class="col-md-3">
-                <label> lado 3</label>
-                <input ng-disabled="selectvalid" type="number" ng-model="location_3" min="0" max="8" step="1" >
-            </div>
-            <div  class="col-md-3">
-                <label> lado 4</label>
-                <input ng-disabled="selectvalid" type="number" ng-model="location_4" min="0" max="8" step="1" >
-            </div>
-            <div  class="col-md-3">
-                <label> lado 5</label>
-                <input ng-disabled="selectvalid" type="number" ng-model="location_5" min="0" max="8" step="1" >
-            </div>
-            <div class="col-md-12 col-check_side" ng-show="front_side == back_side">
-                <label for="check_side"><b>The design is the same for both sides?</b></label>
-                <input id="check_side"  aria-label="Checkbox for following text input" class="check_side" type="checkbox" ng-model="check_side" name="" value="" >
+            <div class="row" ng-hide="showquantity">
+                <div class="mx-auto" >
+                    <label for="">Front side &nbsp</label>
+                    <input type="checkbox" ng-model="front_side" name="" value="" ng-change="checkboxside()" style="width: 18px;height: 18px">
+                    
+                    <label for="">Back side &nbsp</label>
+                    <input type="checkbox" ng-model="back_side" name="" value="" ng-change="checkboxside()" style="width: 18px;height: 18px">
+                    
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-12 btnQuote">
-       <input ng-disabled="btnQuotevalid" type="submit" name="" id="btnQuote" value="Get Quote" ng-click="load()" >
-       <label for="btnQuote" class="value">Price = &nbsp &nbsp &nbsp<b>@{{preciototal}}</b></label>
-   </div>
-</form>
+        <div class="col-md-12 btnQuote">
+           <input ng-disabled="btnQuotevalid" type="submit" name="" id="btnQuote" value="Get Quote" ng-click="load()" >
+           <label for="btnQuote" class="value">&nbsp &nbsp &nbsp &nbsp &nbsp<b>@{{preciototal}}
+           </b></label>
+       </div>
+   </form>
 </div>
 
 </div>
 </div>
 <div ng-show="btnQuotevalid" class="alert alert-danger" role="alert">
-  Please select a color
+  Please select a size
 </div>
 </div>
 <div class="modalfooter">

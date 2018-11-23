@@ -15,23 +15,62 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 	$scope.product="Select a Color"
 	$scope.Pleasewalit="Color: "
 	$scope.selectvalid=true
-	$scope.preciototal='$'+0
-	$scope.location_1=0
+	//$scope.preciototal='$'+0
+	$scope.location_1=1
 	$scope.location_2=0
 	$scope.location_3=0
 	$scope.location_4=0
 	$scope.location_5=0
-	$scope.front_side=false
+	$scope.front_side=true
 	$scope.back_side=false
 	$scope.btnQuotevalid=true
 	$scope.currentPage = 0;
 	$scope.pageSize = 12;
 	$scope.ClrGroup=79
 	$scope.ClrCode=0
+	$scope.maxlocation=8
+	$scope.showquantity=true
 	$scope.numberOfPages=function(){
 		return Math.ceil($scope.styles.length/$scope.pageSize);                
 	}
 
+	$scope.valquantity = function() {
+		if ($scope.quantity<12) {
+			$scope.showquantity=false
+			console.log("menor "+$scope.quantity)
+		}else{
+			$scope.showquantity=true
+			console.log("mayor "+$scope.quantity)
+		}
+		if ($scope.quantity > $scope.Clritemqty) {
+			alert("You are trying to order more than we have in stock.")
+			$scope.quantity=$scope.Clritemqty
+		}
+		if ($scope.quantity<23) {
+			$scope.maxlocation=6
+		}else if($scope.quantity>=24 && $scope.quantity<=35){
+			$scope.maxlocation=7;
+		}else if($scope.quantity>35){
+			$scope.maxlocation=8;
+		}
+
+	}
+
+	$scope.checkboxlocation = function() {
+		if ($scope.location_1==0 && $scope.location_2==0 && $scope.location_3==0 && $scope.location_4==0 && $scope.location_5==0) {
+			alert("Select at least one location")
+			$scope.location_1=1
+		}else{
+		}
+
+	}
+
+	$scope.checkboxside = function() {
+		if ($scope.front_side==false && $scope.back_side==false) {
+			$scope.front_side=true
+		}
+
+	}
 	$scope.loadcategories = function () {
 		$.ajaxSetup({
 			headers: {
@@ -129,20 +168,25 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 		})
 
 	}
-	$scope.loadsize = function (img,colorGp,colorCd) {
+	$scope.loadsize = function (img,colorGp,colorCd,coloN) {
 		$scope.ClrGroup=colorGp
 		$scope.ClrCode=colorCd
+		$scope.styleImg=img
+		$scope.ClrNm=coloN
+		console.log($scope.styleImg)
 	}
 
-	$scope.loadproduct = function (pc,img,imgB,imgS,coloN,sizeN,colorGp,colorCd) {
+	$scope.loadproduct = function (pc,img,imgB,imgS,coloN,sizeN,colorGp,colorCd,itemqty,sku) {
 		//prepro es el Precio del product
-		console.log(colorCd)
+		$(".thead-dark th").removeClass("theaddarkth")
+
+		$scope.quantity=""
 		$scope.ClrGroup=colorGp
+		$scope.Clritemqty=itemqty
 		$scope.ClrCode=colorCd
-		$scope.ClrNm=coloN
 		$scope.price=pc
-		$scope.styleImg=img
 		$scope.stylename=coloN+" - "+sizeN+" $"+pc
+		$("#"+sku).addClass("theaddarkth")
 		$scope.load()
 		$scope.btnQuotevalid=false
 		// console.log($scope.price)
@@ -170,8 +214,9 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 	}
 
 	$scope.load=function(){
+		$scope.preciototal=""
 		//console.log($scope.QuoteForm.$valid)
-		console.log($scope.price)
+		//console.log($scope.price)
 		if ($scope.QuoteForm.$valid) {
 			$.ajaxSetup({
 				headers: {
@@ -184,12 +229,13 @@ quotetshirtsApp.controller('quotetshirtcontroller',function($scope,$http){
 				data: {P:$scope.price,Q:$scope.quantity,L1:$scope.location_1,L2:$scope.location_2,L3:$scope.location_3,L4:$scope.location_4,L5:$scope.location_5,B:$scope.back_side,F:$scope.front_side},
 				//processData: false,
 				success:function(data){
-
-					$scope.preciototal='$ '+data.total;
+					$scope.preciototal='$'+data.uno.toFixed(2)+' each / $'+data.total+' total'
+					$scope.preciototaleach='$ '+data.uno;
 					$scope.preciototalBD=data.total;
+					
 					$scope.$apply()
 					console.log(data);
-					$scope.Savequote()
+					//$scope.Savequote()
 				},
 				error:function(){
 				}
